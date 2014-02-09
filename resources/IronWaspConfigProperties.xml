@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<properties>
+    <portNumber>8081</portNumber>
+    <startLogRangeUrl>/ironwasp/api/core/workflow/start</startLogRangeUrl>
+    <endLogRangeUrl>/ironwasp/api/core/workflow/end</endLogRangeUrl>
+</properties>
