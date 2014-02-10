@@ -23,10 +23,11 @@ import org.xml.sax.SAXException;
 public class IronWaspConfig {
 
 	private String configFile="resources/IronWaspConfigProperties.xml";
-	private  String portNumber = null;
-	private  String startLogRangeUrl = null;
-	private  String endLogRangeUrl = null;
-
+	private String portNumber = null;
+	private String startLogRangeUrl = null;
+	private String endLogRangeUrl = null;
+	private String ipAddress  = null;
+	
 	public IronWaspConfig() {
 
 		File file = new File(configFile);
@@ -54,23 +55,20 @@ public class IronWaspConfig {
 			Logger.getLogger(IronWaspConfig.class.getName()).log(Level.SEVERE, "Cannot find PortNumber in IronWaspConfigProperties.xml");
 			System.exit(1);
 		}
-		if (document.getElementsByTagName("startLogRangeUrl").getLength() != 0) {
-			startLogRangeUrl = "http://localhost:" + portNumber + document.getElementsByTagName("startLogRangeUrl").item(0).getTextContent();
+		if (document.getElementsByTagName("ipAddress").getLength() != 0) {
+			ipAddress = document.getElementsByTagName("ipAddress").item(0).getTextContent();
 		} else {
-			Logger.getLogger(IronWaspConfig.class.getName()).log(Level.SEVERE, "Cannot find startLogRangeUrl in IronWaspConfigProperties.xml");
+			Logger.getLogger(IronWaspConfig.class.getName()).log(Level.SEVERE, "Cannot find ipAddress in IronWaspConfigProperties.xml");
 			System.exit(1);
 		}
-		if (document.getElementsByTagName("endLogRangeUrl").getLength() != 0) {
-			endLogRangeUrl = "http://localhost:" + portNumber + document.getElementsByTagName("endLogRangeUrl").item(0).getTextContent();
-		} else {
-			Logger.getLogger(IronWaspConfig.class.getName()).log(Level.SEVERE, "Cannot find endLogRangeUrl in IronWaspConfigProperties.xml");
-			System.exit(1);
-		}
+		
+		startLogRangeUrl = "http://" + ipAddress + ":" + portNumber + "/ironwasp/api/core/workflow/start";
+		endLogRangeUrl = "http://" + ipAddress + ":" + portNumber + "/ironwasp/api/core/workflow/end";
 	}
 	//Get Port Number
 
-	public String getPortNumber() {
-		return portNumber;
+	public int getPortNumber() {
+		return Integer.parseInt(portNumber);
 	}
 
 	//Get Start Log URL
@@ -81,5 +79,10 @@ public class IronWaspConfig {
 	//Get End Log URL
 	public String getEndLogRangeUrl() {
 		return endLogRangeUrl;
+	}
+
+	//Get the IP address
+	public String getIPAddress() {
+		return ipAddress;
 	}
 }

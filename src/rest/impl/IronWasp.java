@@ -20,15 +20,25 @@ public class IronWasp extends IronWaspClient {
 
 	static Response response = null;
 	static IronWaspConfig config = null;
+	public static int portNumber = 0;
+	public static String ipAddress = null;
+	static String className = null ;
+	static HashMap<String, String> params = null;
+	
 	static {
 		config = new IronWaspConfig();
+		portNumber = config.getPortNumber();
+		ipAddress = config.getIPAddress();
+		params = new HashMap<String, String>();
 	}
 
-	public static void startIronWaspLog() {
-		startIronWaspLog(null);
+	public static void workflowStart() {
+		workflowStart(params);
 	}
 
-	public static void startIronWaspLog(HashMap<String, String> params) {
+	public static void workflowStart(HashMap<String, String> params) {
+		className = new Exception().getStackTrace()[1].getClassName();
+		params.put("name", className);
 		try {
 			URL url = new URL(config.getStartLogRangeUrl());
 			response = doGetRequest(url, params);
@@ -37,11 +47,11 @@ public class IronWasp extends IronWaspClient {
 		}
 	}
 
-	public static void endIronWaspLog() {
-		endIronWaspLog(null);
+	public static void workflowEnd() {
+		workflowEnd(null);
 	}
 
-	public static void endIronWaspLog(HashMap<String, String> params) {
+	public static void workflowEnd(HashMap<String, String> params) {
 		try {
 			URL url = new URL(config.getEndLogRangeUrl());
 			response = doGetRequest(url, params);

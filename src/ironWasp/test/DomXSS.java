@@ -12,14 +12,14 @@ import rest.impl.IronWasp;
 public class DomXSS {
 
 	public static void main(String args[]) {
-		IronWasp.startIronWaspLog();
+		IronWasp.workflowStart();
 		
 		FirefoxProfile profile = new FirefoxProfile();  
 		profile.setPreference("network.proxy.type", 1);
-		profile.setPreference("network.proxy.http", "localhost");
-		profile.setPreference("network.proxy.http_port", 8081);
-		profile.setPreference("network.proxy.ssl", "localhost");
-		profile.setPreference("network.proxy.ssl_port", 8081);
+		profile.setPreference("network.proxy.http", IronWasp.ipAddress);
+		profile.setPreference("network.proxy.http_port", IronWasp.portNumber);
+		profile.setPreference("network.proxy.ssl", IronWasp.ipAddress);
+		profile.setPreference("network.proxy.ssl_port", IronWasp.portNumber);
 		profile.setPreference("network.proxy.no_proxies_on","");
 		WebDriver driver = new FirefoxDriver(profile);
 		
@@ -36,6 +36,6 @@ public class DomXSS {
 		else
 			System.out.println("key not added, run again");
 		driver.close();
-		IronWasp.endIronWaspLog();
+		IronWasp.workflowEnd();
 	}	
 }
