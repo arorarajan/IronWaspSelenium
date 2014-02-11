@@ -37,7 +37,7 @@ public class IronWasp extends IronWaspClient {
 	}
 
 	public static void workflowStart(HashMap<String, String> params) {
-		className = new Exception().getStackTrace()[1].getClassName();
+		className = new Exception().getStackTrace()[2].getClassName();
 		params.put("name", className);
 		try {
 			URL url = new URL(config.getStartLogRangeUrl());
